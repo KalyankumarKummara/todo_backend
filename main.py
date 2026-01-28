@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from utils.scheduler import start_scheduler
 from routes.signup import signup_router
 from routes.verify_email import email_router
 from routes.login import login_router
@@ -13,8 +12,11 @@ from routes.user_stats import user_stats_router
 from routes.manage_users import admin_router
 from routes.get_user import users_router
 from routes.search import search_router
-from utils.scheduler import scheduler
 from routes.cron_reminder import cron_router
+import os
+ENV = os.getenv("ENV", "production")
+if ENV == "local":
+    from utils.scheduler import start_scheduler
 app = FastAPI(
     title="ToDo List API",
     description="A backend for an advanced ToDo List app",
@@ -45,9 +47,10 @@ app.include_router(admin_router)
 app.include_router(search_router)
 app.include_router(cron_router)
 
-@app.on_event("startup")
-async def startup_event():
-    start_scheduler()
+if ENV == "local":
+    @app.on_event("startup")
+    async def startup_event():
+        start_scheduler()
    
 @app.get("/")
 def read_root():
