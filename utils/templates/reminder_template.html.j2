@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Task Reminder</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f8fb; padding: 20px;">
+  <table align="center" width="600" cellpadding="0" cellspacing="0" style="background: #ffffff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
+    <tr>
+      <td style="background: linear-gradient(90deg, #4CAF50, #2e7d32); color: white; padding: 20px; text-align: center; border-radius: 12px 12px 0 0;">
+        <h2 style="margin: 0; font-size: 24px;">⏰Task Reminder</h2>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding: 25px; color: #333; font-size: 15px; line-height: 1.6;">
+        <p>Hey <b>{{username}}</b> 👋,</p>
+        <p>Just a quick reminder about one of your tasks:</p>
+        <div style="border: 1px solid #e1e1e1; padding: 18px; border-radius: 8px; background: #fafafa; margin: 15px 0;">
+          <p><b>Title:</b> {{title}}</p>
+          <p><b>Description:</b> {{description}}</p>
+          <p><b>Priority:</b> <span style="color: {{priority_color}}; font-weight: bold;">{{priority}}</span></p>
+          <p><b>Due Date:</b> {{due_date}}</p>
+        </div>
+        <p>Stay focused and keep crushing your goals</p>
+        <p>With you always,<br><b> ToDo App Team</b></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="background: #f1f1f1; text-align: center; padding: 12px; font-size: 12px; color: #777; border-radius: 0 0 12px 12px;">
+        © 2025 ToDo App. All rights reserved.
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
