@@ -4,6 +4,7 @@ from utils.email_utils import send_reminder_email
 from db import task_collection, user_collection
 import os
 from bson import ObjectId
+ENV = os.getenv("ENV", "production")
 if ENV == "local":
     from apscheduler.schedulers.asyncio import AsyncIOScheduler
     from apscheduler.triggers.date import DateTrigger
