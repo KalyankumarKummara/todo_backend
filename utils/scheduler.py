@@ -1,12 +1,14 @@
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.date import DateTrigger
-from apscheduler.triggers.cron import CronTrigger
 from datetime import datetime, timezone
 from jinja2 import Environment, FileSystemLoader
+from main import ENV
 from utils.email_utils import send_reminder_email
 from db import task_collection, user_collection
 import os
 from bson import ObjectId
+if ENV == "local":
+    from apscheduler.schedulers.asyncio import AsyncIOScheduler
+    from apscheduler.triggers.date import DateTrigger
+    from apscheduler.triggers.cron import CronTrigger
 
 scheduler = AsyncIOScheduler()
 template_path = os.path.join(os.path.dirname(__file__), "templates")
