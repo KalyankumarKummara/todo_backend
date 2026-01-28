@@ -26,7 +26,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
     "http://localhost:5173",
-    "https://todo-app.netlify.app",
+    "https://app-todopro.netlify.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
