@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 from jinja2 import Environment, FileSystemLoader
-from main import ENV
 from utils.email_utils import send_reminder_email
 from db import task_collection, user_collection
 import os
