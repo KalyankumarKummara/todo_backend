@@ -7,7 +7,7 @@ from utils.otp_handler import generate_and_send_otp
 signup_router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated = "auto")
 @signup_router.post("/signup")
-async def Signup(user : Signup):
+async def register_user(user : Signup):
     if user.password != user.Confirm_password:
         return {"message" : "Passwords do not match"}
     existing_user = user_collection.find_one({"email" : user.email})
