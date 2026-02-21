@@ -1,15 +1,23 @@
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import os
+import resend
 from jinja2 import Template
 from dotenv import load_dotenv
-import os
+
 load_dotenv()
 
-EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+resend.api_key = os.environ["RESEND_API_KEY"]
+
+def _send_html_email(to_email: str, subject: str, html_content: str):
+    resend.Emails.send({
+        "from": "onboarding@resend.dev",   
+        "to": [to_email],
+        "subject": subject,
+        "html": html_content
+    })
+
 
 def send_reminder_email(to_email, username, title, description, priority, due_date):
+
     with open("utils/templates/reminder_template.html.j2", "r", encoding="utf-8") as f:
         html_template = f.read()
 
@@ -26,31 +34,14 @@ def send_reminder_email(to_email, username, title, description, priority, due_da
         due_date=due_date if due_date else "Not set"
     )
 
-    msg = MIMEMultipart("alternative")
-    msg["From"] = EMAIL_ADDRESS
-    msg["To"] = to_email
-    msg["Subject"] = f"Reminder: {title}"
-
-    msg.attach(MIMEText(html_content, "html"))
-
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-        server.sendmail(EMAIL_ADDRESS, to_email, msg.as_string())
+    _send_html_email(to_email, f"Reminder: {title}", html_content)
 
 def send_email(to_email: str, subject: str, template_path: str, context: dict):
+
     with open(template_path, "r", encoding="utf-8") as f:
         html_template = f.read()
 
     template = Template(html_template)
     html_content = template.render(**context)
 
-    msg = MIMEMultipart("alternative")
-    msg["From"] = EMAIL_ADDRESS
-    msg["To"] = to_email
-    msg["Subject"] = subject
-
-    msg.attach(MIMEText(html_content, "html"))
-
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-        server.sendmail(EMAIL_ADDRESS, to_email, msg.as_string())
+    _send_html_email(to_email, subject, html_content)
